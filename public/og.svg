@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <radialGradient id="bg1" cx="20%" cy="0%" r="90%">
+      <stop offset="0%" stop-color="#A78BFA" stop-opacity="0.45"/>
+      <stop offset="55%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bg2" cx="100%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#67E8F9" stop-opacity="0.30"/>
+      <stop offset="55%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bg3" cx="60%" cy="100%" r="70%">
+      <stop offset="0%" stop-color="#F472B6" stop-opacity="0.28"/>
+      <stop offset="55%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="markStroke" x1="0" y1="0" x2="160" y2="160" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#A78BFA"/>
+      <stop offset="55%" stop-color="#67E8F9"/>
+      <stop offset="100%" stop-color="#F472B6"/>
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#FFFFFF"/>
+      <stop offset="75%" stop-color="#67E8F9"/>
+      <stop offset="100%" stop-color="#A78BFA"/>
+    </linearGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M 64 0 L 0 0 0 64" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#000"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#bg1)"/>
+  <rect width="1200" height="630" fill="url(#bg2)"/>
+  <rect width="1200" height="630" fill="url(#bg3)"/>
+
+  <!-- mark, top-left -->
+  <g transform="translate(80,80)">
+    <circle cx="40" cy="40" r="38" stroke="url(#markStroke)" stroke-width="1.6" opacity="0.75"/>
+    <circle cx="40" cy="40" r="24" stroke="url(#markStroke)" stroke-width="1.6" opacity="0.85"/>
+    <circle cx="40" cy="40" r="6" fill="#fff"/>
+    <line x1="40" y1="0" x2="40" y2="12" stroke="#67E8F9" stroke-width="2" stroke-linecap="round"/>
+    <line x1="40" y1="68" x2="40" y2="80" stroke="#F472B6" stroke-width="2" stroke-linecap="round"/>
+    <line x1="0" y1="40" x2="12" y2="40" stroke="#A78BFA" stroke-width="2" stroke-linecap="round"/>
+    <line x1="68" y1="40" x2="80" y2="40" stroke="#67E8F9" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <text x="180" y="130" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="34" fill="#fff" letter-spacing="-0.02em">Beacon</text>
+  <text x="180" y="158" font-family="JetBrains Mono, monospace" font-weight="500" font-size="14" fill="#A1A1AA" letter-spacing="0.16em">LEAD-GEN / ICP ENRICHMENT</text>
+
+  <!-- title -->
+  <text x="80" y="360" font-family="Inter, system-ui, sans-serif" font-weight="800" font-size="120" fill="url(#titleGrad)" letter-spacing="-0.045em">Find your next</text>
+  <text x="80" y="490" font-family="Inter, system-ui, sans-serif" font-weight="800" font-size="120" fill="url(#titleGrad)" letter-spacing="-0.045em">100 customers.</text>
+
+  <!-- bottom strip -->
+  <line x1="80" y1="540" x2="1120" y2="540" stroke="rgba(255,255,255,0.15)"/>
+  <text x="80" y="580" font-family="JetBrains Mono, monospace" font-size="16" fill="#A1A1AA" letter-spacing="0.06em">SCRAPE   /   SCORE   /   EXPORT</text>
+  <text x="1120" y="580" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="16" fill="#A1A1AA" letter-spacing="0.06em">beacon.bradysandmann.com</text>
+</svg>

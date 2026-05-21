@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="Beacon">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#67E8F9" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#A78BFA" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0B0B0E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="strokeGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#A78BFA"/>
+      <stop offset="55%" stop-color="#67E8F9"/>
+      <stop offset="100%" stop-color="#F472B6"/>
+    </linearGradient>
+    <linearGradient id="dotGrad" x1="0" y1="0" x2="0" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#A78BFA"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="url(#bgGrad)"/>
+  <!-- outer ring -->
+  <circle cx="32" cy="32" r="22" stroke="url(#strokeGrad)" stroke-width="1.5" opacity="0.7"/>
+  <!-- inner ring -->
+  <circle cx="32" cy="32" r="14" stroke="url(#strokeGrad)" stroke-width="1.5" opacity="0.85"/>
+  <!-- three orbit ticks -->
+  <line x1="32" y1="2" x2="32" y2="10" stroke="#67E8F9" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="32" y1="54" x2="32" y2="62" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="2" y1="32" x2="10" y2="32" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="54" y1="32" x2="62" y2="32" stroke="#67E8F9" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- core dot -->
+  <circle cx="32" cy="32" r="4.5" fill="url(#dotGrad)"/>
+  <circle cx="32" cy="32" r="9" stroke="#FFFFFF" stroke-width="0.6" opacity="0.4"/>
+</svg>
