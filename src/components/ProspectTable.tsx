@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import type { Prospect } from "@/lib/supabase";
 import { fitColor, intentLabel } from "@/lib/utils";
 
@@ -13,7 +13,7 @@ type Row = Pick<
   | "fit_score"
   | "intent_signal"
   | "claude_summary"
->;
+> & { fit_reasons?: string[] | null };
 
 type SortKey = "fit_score" | "company_name" | "employee_count_est" | "intent_signal";
 type Dir = "asc" | "desc";
@@ -71,12 +71,14 @@ export function ProspectTable({ rows, compact = false }: { rows: Row[]; compact?
             {sorted.map((r) => {
               const intent = intentLabel(r.intent_signal);
               const isOpen = expanded === r.id;
+              const fc = fitColor(r.fit_score);
+              const reasons = r.fit_reasons && r.fit_reasons.length ? r.fit_reasons : null;
               return (
-                <>
+                <Fragment key={r.id}>
                   <tr
-                    key={r.id}
                     onClick={() => setExpanded(isOpen ? null : r.id)}
-                    className="cursor-pointer"
+                    className="row-interactive cursor-pointer"
+                    style={isOpen ? { background: "rgba(255,255,255,0.025)" } : undefined}
                   >
                     <td className="text-white">{r.company_name}</td>
                     {!compact && <td className="text-muted">{r.phone || "."}</td>}
@@ -88,8 +90,8 @@ export function ProspectTable({ rows, compact = false }: { rows: Row[]; compact?
                     <td className="text-right text-muted">{r.employee_count_est ?? "."}</td>
                     <td className="text-right">
                       <span className="score-chip">
-                        <span className="score-dot" style={{ background: fitColor(r.fit_score) }} />
-                        <span style={{ color: fitColor(r.fit_score) }}>{r.fit_score ?? "."}</span>
+                        <span className="score-dot" style={{ background: fc }} />
+                        <span style={{ color: fc }}>{r.fit_score ?? "."}</span>
                       </span>
                     </td>
                     <td>
@@ -105,18 +107,52 @@ export function ProspectTable({ rows, compact = false }: { rows: Row[]; compact?
                     </td>
                   </tr>
                   {isOpen && (
-                    <tr key={r.id + "-x"}>
-                      <td colSpan={compact ? 5 : 7} style={{ background: "rgba(255,255,255,0.015)" }}>
-                        <div className="px-1 py-2 font-mono text-[0.78rem] text-muted whitespace-normal leading-relaxed">
-                          <span className="text-glow-gradient">/&gt;</span> {r.claude_summary || "No summary yet."}
-                          {r.website ? (
-                            <div className="mt-2 text-[0.72rem] text-glow-gradient">{r.website}</div>
-                          ) : null}
+                    <tr key={r.id + "-x"} className="reveal-row">
+                      <td colSpan={compact ? 5 : 7} style={{ background: "rgba(255,255,255,0.015)", padding: 0 }}>
+                        <div className="reason-panel">
+                          <div className="reason-grid">
+                            <div className="reason-left">
+                              <div className="reason-label">
+                                Why this scored
+                              </div>
+                              <div className="reason-score" style={{ color: fc }}>
+                                {r.fit_score ?? "."}
+                                <span className="reason-score-suffix">/100</span>
+                              </div>
+                              <div className="reason-divider" />
+                              <div className="reason-summary">
+                                <span className="text-glow-gradient">/&gt;</span> {r.claude_summary || "No summary yet."}
+                              </div>
+                              {r.website ? (
+                                <a
+                                  href={r.website.startsWith("http") ? r.website : `https://${r.website}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="reason-website"
+                                >
+                                  {r.website}
+                                </a>
+                              ) : null}
+                            </div>
+                            <div className="reason-right">
+                              <div className="reason-label">
+                                Score factors
+                              </div>
+                              <ul className="reason-list">
+                                {(reasons ?? deriveReasonsFromSummary(r)).map((rs, i) => (
+                                  <li key={i} className="reason-item">
+                                    <span className="reason-bullet" style={{ background: fc, boxShadow: `0 0 6px ${fc}` }} />
+                                    <span>{rs}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </div>
                         </div>
                       </td>
                     </tr>
                   )}
-                </>
+                </Fragment>
               );
             })}
             {sorted.length === 0 && (
@@ -133,4 +169,30 @@ export function ProspectTable({ rows, compact = false }: { rows: Row[]; compact?
       </div>
     </div>
   );
+}
+
+// Fallback: when a row has no explicit fit_reasons array (live DB rows), derive
+// a tight 3-bullet set from structured fields so the reasoning panel never reads empty.
+function deriveReasonsFromSummary(r: Row): string[] {
+  const out: string[] = [];
+  const emp = r.employee_count_est;
+  if (typeof emp === "number") {
+    if (emp >= 5 && emp <= 30) out.push(`Employee count ${emp} inside the 5-30 ICP band`);
+    else if (emp > 30) out.push(`Employee count ${emp}, above ICP ceiling`);
+    else out.push(`Employee count ${emp}, below ICP floor`);
+  }
+  if (r.address && /tampa|hillsborough/i.test(r.address)) {
+    out.push("Address inside Tampa / Hillsborough target geography");
+  } else if (r.address) {
+    out.push("Address outside core target geography");
+  }
+  if (r.website && r.phone) {
+    out.push("Phone and website both present, complete public listing");
+  } else if (!r.website && !r.phone) {
+    out.push("Missing phone and website, listing incomplete");
+  }
+  if (r.intent_signal === "active") out.push("Recent activity signal");
+  if (r.intent_signal === "dormant") out.push("No recent activity, dormant signal");
+  if (r.intent_signal === "closed") out.push("Listing flagged closed");
+  return out.slice(0, 5);
 }

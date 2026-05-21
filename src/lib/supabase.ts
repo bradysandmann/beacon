@@ -36,6 +36,9 @@ export type Prospect = {
   fit_score: number | null;
   intent_signal: "active" | "dormant" | "closed" | string | null;
   claude_summary: string | null;
+  // Optional virtual field: 3-5 short bullet reasons explaining the fit score.
+  // Stored in raw_json server-side; surfaced on the client for visible reasoning.
+  fit_reasons?: string[] | null;
   raw_json: Record<string, unknown> | null;
   created_at: string;
 };

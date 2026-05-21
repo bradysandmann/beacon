@@ -106,16 +106,29 @@ export function TargetDetail({ session: _session }: { session: Session }) {
     if (!filtered.length) return;
     downloadCSV(
       `beacon-${(target?.query ?? "list").replace(/[^a-z0-9]+/gi, "-").toLowerCase()}.csv`,
-      filtered.map((r) => ({
-        company_name: r.company_name,
-        phone: r.phone,
-        address: r.address,
-        website: r.website,
-        employee_count_est: r.employee_count_est,
-        fit_score: r.fit_score,
-        intent_signal: r.intent_signal,
-        claude_summary: r.claude_summary,
-      }))
+      filtered.map((r) => {
+        // Pull stored fit_reasons either from the explicit column or from
+        // raw_json (where the live scorer may stash them). Join with " | "
+        // so the bullet set stays inside one CSV cell.
+        const reasons = ((): string[] => {
+          const direct = (r as Prospect & { fit_reasons?: string[] | null }).fit_reasons;
+          if (Array.isArray(direct) && direct.length) return direct;
+          const raw = r.raw_json as { fit_reasons?: unknown } | null;
+          if (raw && Array.isArray(raw.fit_reasons)) return raw.fit_reasons as string[];
+          return [];
+        })();
+        return {
+          company_name: r.company_name,
+          phone: r.phone,
+          address: r.address,
+          website: r.website,
+          employee_count_est: r.employee_count_est,
+          fit_score: r.fit_score,
+          intent_signal: r.intent_signal,
+          claude_summary: r.claude_summary,
+          fit_reasons: reasons.join(" | "),
+        };
+      })
     );
   }
 

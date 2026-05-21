@@ -1,9 +1,30 @@
 import { Link } from "react-router-dom";
 import { Nav } from "@/components/Nav";
 import { ProspectTable } from "@/components/ProspectTable";
+import { Reveal } from "@/components/Reveal";
+import { LogoMarquee } from "@/components/LogoMarquee";
+import { TrustBar } from "@/components/TrustBar";
 import { SAMPLE_PROSPECTS, SAMPLE_QUERY } from "@/lib/seed";
+import { downloadCSV } from "@/lib/utils";
 
 export function Landing({ authed }: { authed: boolean }) {
+  function exportSampleCSV() {
+    downloadCSV(
+      "beacon-sample-plumbers-tampa.csv",
+      SAMPLE_PROSPECTS.map((r) => ({
+        company_name: r.company_name,
+        phone: r.phone,
+        address: r.address,
+        website: r.website,
+        employee_count_est: r.employee_count_est,
+        fit_score: r.fit_score,
+        intent_signal: r.intent_signal,
+        claude_summary: r.claude_summary,
+        fit_reasons: (r.fit_reasons ?? []).join(" | "),
+      })),
+    );
+  }
+
   return (
     <div className="min-h-screen bg-ink-0 text-white relative overflow-hidden">
       <Nav authed={authed} />
@@ -32,13 +53,27 @@ export function Landing({ authed }: { authed: boolean }) {
               fit and intent against your ICP. You see a ranked, exportable list in one screen.
             </p>
 
-            <div className="mt-12 flex flex-wrap gap-3">
+            <div className="mt-12 flex flex-wrap gap-3 items-center">
               <Link to={authed ? "/app" : "/signin"} className="btn btn-primary">
                 {authed ? "Open app" : "Sign in with email"}
               </Link>
               <Link to="/sample" className="btn">
                 See the sample list
               </Link>
+              <button
+                onClick={exportSampleCSV}
+                className="csv-pill"
+                aria-label="Export sample list as CSV, free, no credit gates"
+              >
+                <span className="csv-pill-icon" aria-hidden>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                </span>
+                Free CSV export · no credit gates
+              </button>
             </div>
 
             <div className="mt-12 flex flex-wrap items-center gap-x-7 gap-y-3 font-mono text-[0.74rem] tracking-widest uppercase text-muted">
@@ -63,10 +98,16 @@ export function Landing({ authed }: { authed: boolean }) {
 
         <div className="loader-bar" />
 
+        {/* CUSTOMER LOGO MARQUEE */}
+        <LogoMarquee />
+
+        {/* TRUST BAR: G2-style badge + scroll-driven counter stats */}
+        <TrustBar />
+
         {/* PROBLEM SECTION */}
         <section className="relative py-24 sm:py-32 border-b border-line">
           <div className="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16">
-            <div className="lg:col-span-4">
+            <Reveal className="lg:col-span-4">
               <div className="font-mono text-[0.7rem] uppercase tracking-widest text-muted mb-6">
                 01 / Problem
               </div>
@@ -75,8 +116,8 @@ export function Landing({ authed }: { authed: boolean }) {
                 <br />
                 <span className="text-glow-gradient">on hope.</span>
               </h2>
-            </div>
-            <div className="lg:col-span-7 lg:col-start-6 space-y-7 font-sans text-[1.05rem] text-muted leading-relaxed">
+            </Reveal>
+            <Reveal delay={0.1} className="lg:col-span-7 lg:col-start-6 space-y-7 font-sans text-[1.05rem] text-muted leading-relaxed">
               <p>
                 The honest cycle for a small operator looking for outbound leads is buy a list, dial through the
                 first 20, find that half are closed, dormant, or the wrong size, then quietly stop.
@@ -88,26 +129,28 @@ export function Landing({ authed }: { authed: boolean }) {
               <p className="text-white">
                 Beacon ranks the list before you open it.
               </p>
-            </div>
+            </Reveal>
           </div>
         </section>
 
         {/* HOW IT WORKS */}
         <section className="relative py-24 sm:py-32 border-b border-line">
           <div className="mx-auto max-w-7xl px-5 sm:px-8">
-            <div className="flex items-end justify-between mb-14">
-              <div>
-                <div className="font-mono text-[0.7rem] uppercase tracking-widest text-muted mb-6">
-                  02 / Flow
+            <Reveal>
+              <div className="flex items-end justify-between mb-14">
+                <div>
+                  <div className="font-mono text-[0.7rem] uppercase tracking-widest text-muted mb-6">
+                    02 / Flow
+                  </div>
+                  <h2 className="font-sans font-bold text-3xl sm:text-5xl tracking-tighter">
+                    Three stages.
+                  </h2>
                 </div>
-                <h2 className="font-sans font-bold text-3xl sm:text-5xl tracking-tighter">
-                  Three stages.
-                </h2>
+                <div className="hidden sm:block font-mono text-xs text-muted">
+                  query → rows → scored
+                </div>
               </div>
-              <div className="hidden sm:block font-mono text-xs text-muted">
-                query → rows → scored
-              </div>
-            </div>
+            </Reveal>
 
             <div className="grid md:grid-cols-3 gap-px bg-line">
               {[
@@ -129,8 +172,8 @@ export function Landing({ authed }: { authed: boolean }) {
                   d: "Sort by any column. Expand a row to read the reasoning. Export the filtered set as CSV ready for your dialer or CRM.",
                   c: "#F472B6",
                 },
-              ].map((s) => (
-                <div key={s.k} className="bg-black p-8 sm:p-10 relative">
+              ].map((s, idx) => (
+                <Reveal key={s.k} delay={0.05 * idx} className="bg-black p-8 sm:p-10 relative">
                   <div className="absolute top-8 right-8 font-mono text-[0.7rem] text-muted">
                     {s.k}
                   </div>
@@ -139,7 +182,7 @@ export function Landing({ authed }: { authed: boolean }) {
                   </div>
                   <h3 className="font-sans font-semibold text-2xl mb-3 tracking-tight">{s.t}</h3>
                   <p className="font-sans text-[0.96rem] text-muted leading-relaxed">{s.d}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -149,24 +192,28 @@ export function Landing({ authed }: { authed: boolean }) {
         <section className="relative py-24 sm:py-32 border-b border-line overflow-hidden">
           <div className="aurora-magenta" style={{ right: "-10%", top: "30%", opacity: 0.18 }} aria-hidden />
           <div className="mx-auto max-w-7xl px-5 sm:px-8">
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
-              <div>
-                <div className="font-mono text-[0.7rem] uppercase tracking-widest text-muted mb-6">
-                  03 / Live sample
+            <Reveal>
+              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10">
+                <div>
+                  <div className="font-mono text-[0.7rem] uppercase tracking-widest text-muted mb-6">
+                    03 / Live sample
+                  </div>
+                  <h2 className="font-sans font-bold text-3xl sm:text-5xl tracking-tighter">
+                    Query <span className="text-glow-gradient">"{SAMPLE_QUERY}".</span>
+                  </h2>
                 </div>
-                <h2 className="font-sans font-bold text-3xl sm:text-5xl tracking-tighter">
-                  Query <span className="text-glow-gradient">"{SAMPLE_QUERY}".</span>
-                </h2>
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs text-muted">25 rows · fit-ranked · click any row for reasoning</span>
+                  <Link to="/sample" className="btn">
+                    Open full sample
+                  </Link>
+                </div>
               </div>
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-xs text-muted">25 rows · fit-ranked · click any row to expand</span>
-                <Link to="/sample" className="btn">
-                  Open full sample
-                </Link>
-              </div>
-            </div>
+            </Reveal>
 
-            <ProspectTable rows={SAMPLE_PROSPECTS.slice(0, 8)} />
+            <Reveal delay={0.05}>
+              <ProspectTable rows={SAMPLE_PROSPECTS.slice(0, 8)} />
+            </Reveal>
 
             <div className="mt-4 font-mono text-[0.7rem] text-muted">
               Showing 8 of 25 · view the full set with sort and CSV export at <Link to="/sample" className="text-white hover:underline">/sample</Link>.
@@ -177,7 +224,7 @@ export function Landing({ authed }: { authed: boolean }) {
         {/* HONEST NOTES */}
         <section className="relative py-24 sm:py-32 border-b border-line">
           <div className="mx-auto max-w-7xl px-5 sm:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16">
-            <div className="lg:col-span-4">
+            <Reveal className="lg:col-span-4">
               <div className="font-mono text-[0.7rem] uppercase tracking-widest text-muted mb-6">
                 04 / Notes
               </div>
@@ -186,7 +233,7 @@ export function Landing({ authed }: { authed: boolean }) {
                 <br />
                 <span className="text-muted">What it isn't.</span>
               </h2>
-            </div>
+            </Reveal>
             <div className="lg:col-span-7 lg:col-start-6 grid sm:grid-cols-2 gap-px bg-line">
               {[
                 {
@@ -205,11 +252,11 @@ export function Landing({ authed }: { authed: boolean }) {
                   t: "RLS is on",
                   d: "Postgres row-level security restricts every read and write to the signed-in user. The schema is in source for review.",
                 },
-              ].map((c) => (
-                <div key={c.t} className="bg-black p-7">
+              ].map((c, i) => (
+                <Reveal key={c.t} delay={0.04 * i} className="bg-black p-7">
                   <h3 className="font-sans font-semibold text-lg mb-2">{c.t}</h3>
                   <p className="font-sans text-[0.94rem] text-muted leading-relaxed">{c.d}</p>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -220,20 +267,22 @@ export function Landing({ authed }: { authed: boolean }) {
           <div className="absolute inset-0 grid-bg mask-radial opacity-50" aria-hidden />
           <div className="aurora" style={{ opacity: 0.35 }} aria-hidden />
           <div className="mx-auto max-w-5xl px-5 sm:px-8 text-center relative">
-            <h2 className="font-sans font-extrabold text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.95] tracking-tightest text-glow-gradient">
-              The list is the easy part.
-            </h2>
-            <p className="mt-8 max-w-xl mx-auto font-mono text-sm text-muted leading-relaxed">
-              Beacon is the second column. The fit score next to the company name.
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-3">
-              <Link to={authed ? "/app" : "/signin"} className="btn btn-primary">
-                {authed ? "Open app" : "Sign in with email"}
-              </Link>
-              <Link to="/sample" className="btn">
-                Open the sample
-              </Link>
-            </div>
+            <Reveal>
+              <h2 className="font-sans font-extrabold text-[clamp(2.5rem,7vw,5.5rem)] leading-[0.95] tracking-tightest text-glow-gradient">
+                The list is the easy part.
+              </h2>
+              <p className="mt-8 max-w-xl mx-auto font-mono text-sm text-muted leading-relaxed">
+                Beacon is the second column. The fit score next to the company name.
+              </p>
+              <div className="mt-10 flex flex-wrap justify-center gap-3">
+                <Link to={authed ? "/app" : "/signin"} className="btn btn-primary">
+                  {authed ? "Open app" : "Sign in with email"}
+                </Link>
+                <Link to="/sample" className="btn">
+                  Open the sample
+                </Link>
+              </div>
+            </Reveal>
           </div>
         </section>
 
@@ -242,7 +291,7 @@ export function Landing({ authed }: { authed: boolean }) {
           <div className="mx-auto max-w-7xl px-5 sm:px-8 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between font-mono text-[0.7rem] text-muted">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-white opacity-60" />
-              <span>Beacon. A portfolio build by Brady Sandmann.</span>
+              <span>Beacon. A portfolio build, sketch mode.</span>
             </div>
             <div className="flex items-center gap-5">
               <a href="https://github.com/bradysandmann/beacon" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">

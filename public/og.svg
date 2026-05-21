@@ -54,5 +54,5 @@
   <!-- bottom strip -->
   <line x1="80" y1="540" x2="1120" y2="540" stroke="rgba(255,255,255,0.15)"/>
   <text x="80" y="580" font-family="JetBrains Mono, monospace" font-size="16" fill="#A1A1AA" letter-spacing="0.06em">SCRAPE   /   SCORE   /   EXPORT</text>
-  <text x="1120" y="580" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="16" fill="#A1A1AA" letter-spacing="0.06em">beacon.bradysandmann.com</text>
+  <text x="1120" y="580" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="16" fill="#A1A1AA" letter-spacing="0.06em">FREE CSV EXPORT</text>
 </svg>

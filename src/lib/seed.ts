@@ -8,6 +8,7 @@ export const SAMPLE_QUERY = "Plumbers Tampa FL";
 
 type SeedRow = Omit<Prospect, "id" | "target_id" | "created_at" | "raw_json"> & {
   id: string;
+  fit_reasons: string[];
 };
 
 export const SAMPLE_PROSPECTS: SeedRow[] = [
@@ -22,6 +23,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "active",
     claude_summary:
       "Strong fit. Twelve employees, 4.8 average over 312 reviews, weekly review velocity. Site advertises commercial contracts which matches our ICP.",
+    fit_reasons: [
+      "Employee count 12 sits inside the 5-30 ICP band",
+      "Weekly review velocity (last 30 days) signals active operations",
+      "Site advertises commercial contracts, matches buyer segment",
+      "Tampa core address (33606), inside Hillsborough County target zone",
+      "4.8 average over 312 reviews indicates sustained quality",
+    ],
   },
   {
     id: "s-02",
@@ -34,6 +42,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "active",
     claude_summary:
       "Active in commercial sewer line work, last review 3 days ago. Mid-size, owner-operator, likely to take a 30 minute call.",
+    fit_reasons: [
+      "Employee count 8 inside ICP band",
+      "Last review 3 days ago, active intent signal",
+      "Owner-operator stage maps to single-decision sales motion",
+      "Commercial sewer niche tracks higher contract value",
+      "Tampa city address inside target geography",
+    ],
   },
   {
     id: "s-03",
@@ -46,6 +61,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "active",
     claude_summary:
       "Larger crew, fleet of trucks visible in street view, currently hiring on Indeed. Growth signal.",
+    fit_reasons: [
+      "22 employees, top of the ICP band, growth runway",
+      "Active Indeed job posting flagged as hiring signal",
+      "Street-view fleet visible, indicates capital deployment",
+      "Hillsborough Ave corridor, inside target metro",
+      "Complete public listing across all enrichment fields",
+    ],
   },
   {
     id: "s-04",
@@ -58,6 +80,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "active",
     claude_summary:
       "Niche water heater specialist. Six employees, consistent reviews. Smaller scope but tight ICP match.",
+    fit_reasons: [
+      "Employee count 6 inside ICP band",
+      "Specialist niche (water heaters) maps to defensible margin",
+      "Consistent review cadence over last 90 days",
+      "Tampa 33615, inside target geography",
+      "Single-line service offering, simpler sales conversation",
+    ],
   },
   {
     id: "s-05",
@@ -70,6 +99,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "active",
     claude_summary:
       "Mixed residential and commercial. Eighteen employees. Review pace is steady though not accelerating.",
+    fit_reasons: [
+      "18 employees, mid-ICP band",
+      "Mixed res/commercial book diversifies revenue",
+      "Tampa 33614, inside target geography",
+      "Steady review pace, no surge or decline",
+      "Site copy mentions service contracts, recurring revenue signal",
+    ],
   },
   {
     id: "s-06",
@@ -82,6 +118,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "active",
     claude_summary:
       "Drain-only specialist. Smaller team, but high-margin niche. Likely receptive to lead-flow tools.",
+    fit_reasons: [
+      "Employee count 5 sits at floor of ICP band",
+      "Drain-only specialty implies higher per-call ticket",
+      "Tampa 33607, inside core metro",
+      "Small team profile fits self-serve buyer archetype",
+      "Active website with booking flow visible",
+    ],
   },
   {
     id: "s-07",
@@ -94,6 +137,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "active",
     claude_summary:
       "Small premium residential operator. Owner-led. May be a fit for a single-seat plan.",
+    fit_reasons: [
+      "4 employees, just below ICP band, owner-led",
+      "Premium residential clientele, higher AOV per call",
+      "Davis Islands 33606, affluent Tampa neighborhood",
+      "Owner-led decision making, short sales cycle",
+      "Single-seat plan fit signals lower CAC",
+    ],
   },
   {
     id: "s-08",
@@ -106,6 +156,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "active",
     claude_summary:
       "Older brand, modernizing slowly. Reviews show price sensitivity. Worth a low-touch nurture.",
+    fit_reasons: [
+      "9 employees inside ICP band",
+      "Older brand, longer payback period concern",
+      "Ybor 33605, inside core metro",
+      "Reviews mention price sensitivity, value-prove sales motion",
+      "Site refresh in last 12 months, modernization signal",
+    ],
   },
   {
     id: "s-09",
@@ -118,6 +175,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "active",
     claude_summary:
       "Mechanical contractor with a plumbing arm. Larger team, slower decisions, longer sales cycle.",
+    fit_reasons: [
+      "31 employees, just over ICP ceiling",
+      "Plumbing is secondary line, longer evaluation",
+      "Carrollwood 33612, inside metro",
+      "Mechanical contractor procurement implies committee buying",
+      "Strong public listing across all fields",
+    ],
   },
   {
     id: "s-10",
@@ -130,6 +194,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "active",
     claude_summary:
       "Suburban operator. Gas line work is a differentiator. Reviews look healthy, no recent surge.",
+    fit_reasons: [
+      "14 employees inside ICP band",
+      "Gas line work differentiator, niche margin",
+      "Brandon 33511, suburb of core metro",
+      "Healthy review base, no surge",
+      "Site lists 24/7 emergency, recurring demand pattern",
+    ],
   },
   {
     id: "s-11",
@@ -142,6 +213,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "active",
     claude_summary:
       "Coastal small business. Slow off-season but steady book of work.",
+    fit_reasons: [
+      "7 employees inside ICP band",
+      "Apollo Beach 33572, edge of target metro",
+      "Coastal seasonality, slower off-season",
+      "Steady book of work, no surge",
+      "Public website with contact flow visible",
+    ],
   },
   {
     id: "s-12",
@@ -154,6 +232,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "active",
     claude_summary:
       "Two-truck operation. Local reputation is strong but review velocity is low.",
+    fit_reasons: [
+      "6 employees inside ICP band",
+      "Temple Terrace 33617, inside metro",
+      "Strong local reputation, low online velocity",
+      "Two-truck operation, capital footprint small",
+      "Owner-led decision making, faster close",
+    ],
   },
   {
     id: "s-13",
@@ -166,6 +251,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "dormant",
     claude_summary:
       "No new reviews in 90 days. Website cert recently expired and was renewed. Probably understaffed marketing.",
+    fit_reasons: [
+      "10 employees inside ICP band, but flat review trend",
+      "No new reviews in 90 days, dormant signal",
+      "SSL cert lapsed and renewed, operational hiccup",
+      "Channelside 33602, inside core metro",
+      "Marketing capacity gap suggests buyer pain point",
+    ],
   },
   {
     id: "s-14",
@@ -178,6 +270,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "dormant",
     claude_summary:
       "Decent size but reviews show a quality dip mid-year. Sales conversation likely uphill.",
+    fit_reasons: [
+      "15 employees inside ICP band",
+      "Reviews show quality dip mid-year, sentiment risk",
+      "South Tampa 33629, inside metro",
+      "No hiring signal or growth surge",
+      "Sales conversation likely uphill, deprioritize",
+    ],
   },
   {
     id: "s-15",
@@ -190,6 +289,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "dormant",
     claude_summary:
       "Outside core Tampa. Travel time may not pencil for residential calls.",
+    fit_reasons: [
+      "8 employees inside ICP band",
+      "Plant City 33563, outside Tampa core",
+      "Travel cost erodes per-call margin",
+      "Dormant review cadence",
+      "Listing complete but geographically off-ICP",
+    ],
   },
   {
     id: "s-16",
@@ -202,6 +308,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "dormant",
     claude_summary:
       "Septic-heavy mix is off our ICP. Some plumbing crossover but not the core book.",
+    fit_reasons: [
+      "11 employees inside ICP band",
+      "Septic-primary, plumbing is secondary line",
+      "Riverview 33578, southeast edge of metro",
+      "Service mix only partially overlaps ICP",
+      "Dormant social/review velocity",
+    ],
   },
   {
     id: "s-17",
@@ -214,6 +327,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "dormant",
     claude_summary:
       "Suburb operator, residential-only. Smaller margin profile.",
+    fit_reasons: [
+      "5 employees at floor of ICP band",
+      "Westchase 33626, suburb of core metro",
+      "Residential-only, smaller margin profile",
+      "Dormant review pace",
+      "Listing complete but no growth signal",
+    ],
   },
   {
     id: "s-18",
@@ -226,6 +346,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "dormant",
     claude_summary:
       "Student-area focus, lots of one-off jobs. Lifetime value will be thin.",
+    fit_reasons: [
+      "4 employees, just under ICP floor",
+      "Student-area focus, thin LTV per customer",
+      "USF 33612, inside metro but off-segment",
+      "Dormant review velocity",
+      "One-off job mix, no recurring book",
+    ],
   },
   {
     id: "s-19",
@@ -238,6 +365,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "dormant",
     claude_summary:
       "Reviews trending slowly down. Worth a single follow-up but not a priority.",
+    fit_reasons: [
+      "7 employees inside ICP band",
+      "Citrus Park 33625, inside metro",
+      "Reviews trending down, sentiment risk",
+      "Worth a single follow-up, deprioritize",
+      "No hiring or growth signal",
+    ],
   },
   {
     id: "s-20",
@@ -250,6 +384,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "dormant",
     claude_summary:
       "Reasonable team size but quiet on social and reviews. Might be a slow grower.",
+    fit_reasons: [
+      "9 employees inside ICP band",
+      "Lutz 33548, north edge of metro",
+      "Quiet on social, low online presence",
+      "No growth or hiring signal",
+      "Slow grower profile, deprioritize",
+    ],
   },
   {
     id: "s-21",
@@ -262,6 +403,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "dormant",
     claude_summary:
       "Outside Hillsborough County. Travel cost may erode unit economics.",
+    fit_reasons: [
+      "3 employees, below ICP floor",
+      "Dunedin 34698, Pinellas County, outside target geography",
+      "Travel cost erodes unit economics",
+      "Smaller team, smaller margin",
+      "Dormant pace",
+    ],
   },
   {
     id: "s-22",
@@ -274,6 +422,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "dormant",
     claude_summary:
       "Pinellas operator, healthy team, but our ICP is Hillsborough core. Defer.",
+    fit_reasons: [
+      "12 employees inside band, but wrong county",
+      "Clearwater 33755, Pinellas County",
+      "ICP is Hillsborough core, geographically off",
+      "Healthy team but defer for now",
+      "Listing complete, just out of target zone",
+    ],
   },
   {
     id: "s-23",
@@ -286,6 +441,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "closed",
     claude_summary:
       "Phone is voicemail-only and the website returns a 404. Likely closed in the last quarter.",
+    fit_reasons: [
+      "2 employees, well below ICP floor",
+      "Phone routes to voicemail only",
+      "Website returns 404, no live presence",
+      "Likely closed in last quarter",
+      "Skip and dequeue from list",
+    ],
   },
   {
     id: "s-24",
@@ -298,6 +460,13 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "closed",
     claude_summary:
       "Operator-only shop with no current listing. Several recent one-star complaints about no-answer.",
+    fit_reasons: [
+      "1 employee, operator-only",
+      "No office address listed",
+      "Multiple one-star no-answer complaints",
+      "No active listing or website CTA",
+      "Skip, sentiment risk too high",
+    ],
   },
   {
     id: "s-25",
@@ -310,5 +479,12 @@ export const SAMPLE_PROSPECTS: SeedRow[] = [
     intent_signal: "closed",
     claude_summary:
       "Listing flagged closed. Address routes to an empty unit per recent imagery.",
+    fit_reasons: [
+      "0 employees, business closed",
+      "Listing flagged closed in public sources",
+      "Recent imagery shows empty unit at address",
+      "No phone or website life signal",
+      "Dequeue entirely",
+    ],
   },
 ];
